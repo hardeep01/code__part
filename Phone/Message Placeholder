@@ -1,0 +1,9 @@
+<script>
+  
+const messageDiv = document.querySelector('#message');
+
+// Set the content of the selected element to your desired message
+messageDiv.placeholder = 'Message';
+messageDiv.style.color = "#757575";
+  
+</script>
