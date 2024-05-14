@@ -1,0 +1,50 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Function to format phone number as (XXX) XXX-XXXX
+  function formatPhoneNumber() {
+    var phoneNumberField = document.getElementById('phone_number');
+    var phoneNumber = phoneNumberField.value.replace(/\D/g, ''); // Remove non-numeric characters
+    var formattedPhoneNumber = '';
+    
+    if (phoneNumber.length > 0) {
+      formattedPhoneNumber = '(' + phoneNumber.substring(0, 3);
+      if (phoneNumber.length > 3) {
+        formattedPhoneNumber += ') ' + phoneNumber.substring(3, 6);
+        if (phoneNumber.length > 6) {
+          formattedPhoneNumber += '-' + phoneNumber.substring(6, 10);
+        }
+      }
+    }
+    
+    phoneNumberField.value = formattedPhoneNumber;
+  }
+
+  // Event listener to format phone number as user types
+  document.getElementById('phone_number').addEventListener('input', formatPhoneNumber);
+
+  // Function to get raw numeric phone number
+  function getRawPhoneNumber() {
+    return document.getElementById('phone_number').value.replace(/[^\d\+]/g,""); // Remove non-numeric characters
+  }
+
+  // Override form submission to send raw numeric phone number
+  document.getElementById('lp-pom-form-24').addEventListener('submit', function(event) {
+    document.getElementById('phone_number').value = getRawPhoneNumber();
+  });
+});
+</script>
+
+<script>
+  
+  let SubmitButton = document.querySelector("#lp-pom-button-25");
+  
+  function removeChars() {
+    var inputField = document.querySelector("#phone_number");
+    var phoneNumber = inputField.value;
+    var strippedPhoneNumber = phoneNumber.replace(/[\(\)-\s]/g, '');
+    inputField.value = strippedPhoneNumber;
+}
+  
+  SubmitButton.addEventListener("click", removeChars);
+  
+</script>
