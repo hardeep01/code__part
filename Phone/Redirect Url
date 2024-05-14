@@ -1,0 +1,50 @@
+<script>
+  
+ 
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function checkFormSubmitted() {
+        var formSubmitted = getCookie("formSubmitted");
+        if (formSubmitted) {
+            // Check if the URL parameter is_test=true is present
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('is_test') && urlParams.get('is_test') === 'true') {
+                return;
+            }
+            window.location.href = "https://contact.jjsjustice.com/ty";
+        }
+    }
+
+    document.getElementById("lp-pom-form-192").addEventListener("submit", function (event) {
+        // Set a cookie to indicate that the form has been submitted
+        setCookie("formSubmitted", "true", 1);
+    });
+
+    window.onload = function () {
+        checkFormSubmitted();
+    };
+    
+   
+</script>
+
