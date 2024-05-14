@@ -1,0 +1,621 @@
+<script>
+
+
+  function UnbounceMultiStep(form, options) {
+    // Validate arguments
+    if (!form.is('.lp-pom-form form')) {
+      return console.error('jQuery.unbounceMultiStep must be called on an Unbounce form.');
+    }
+
+    if (typeof options !== 'object') {
+      return console.error('No options were passed to jQuery.unbounceMultiStep');
+    }
+
+    this.options = options;
+
+    // Store DOM elements
+    this.form = form;
+    this.formContainer = this.form.closest('.lp-pom-form');
+    this.masterContainer = this.form.closest('.lp-element.lp-pom-box');
+    this.fields = this.form.find('div.lp-pom-form-field');
+    this.fieldsByStep = [];
+    this.currentStep = 0;
+    this.forwardButton = this.form.find('button[type=submit]').eq(0);
+
+    // Verbiage
+    this.text = {};
+    this.text.next = this.options.nextButton;
+    this.text.showSteps = this.options.showSteps;
+    this.text.back = this.options.backButton;
+    this.text.submit = this.forwardButton.text();
+
+    this.init();
+  }
+
+  UnbounceMultiStep.prototype.init = function() {
+    this.masterContainer.attr('step', '1');
+    this.formContainer.addClass('multistep initial');
+    this.form.attr('id', 'fields');
+
+    // Add progress bar
+    this.formContainer.prepend('<div id="progress-bar"></div>');
+    this.progressBar = jQuery('#progress-bar');
+
+    // Replicate Unbounce's field spacing
+    var height = parseInt(this.fields.eq(0).css('height'), 10);
+    var top = parseInt(this.fields.eq(1).css('top'), 10);
+    this.fields.css('margin-bottom', top - height + 'px');
+    this.progressBar.css('margin-bottom', top - height + 'px');
+
+    // Set up fieldset elements for each step
+    for (var i = 0; i < this.options.steps.length; i++) {
+      console.log('Adding new fieldset.');
+      this.form.find('.fields').append('<fieldset></fieldset>');
+    }
+    this.steps = this.form.find('fieldset');
+    this.steps.addClass('step');
+
+    // Sort fields into new steps
+    var currentField = 0;
+    for (currentStep = 0; currentStep < this.options.steps.length; currentStep++) {
+      this.progressBar.append(
+        '<div class="step">' +
+          '<span class="num">' +
+          (currentStep + 1) +
+          '</span>' +
+          '<span class="title">' +
+          this.options.steps[currentStep].title +
+          '</span>' +
+          '</div>'
+      );
+      this.fieldsByStep[currentStep] = [];
+      for (i = 0; i < this.options.steps[currentStep].fields; i++) {
+        console.log('Field ' + currentField + ' -> step ' + currentStep);
+        this.fields.eq(currentField).appendTo(this.steps.eq(currentStep));
+        this.fieldsByStep[currentStep].push(this.fields.eq(currentField));
+        currentField++;
+      }
+    }
+
+    // Add any remaining fields to last step
+    if (currentField < this.fields.length) {
+      currentStep--;
+      for (i = currentField; i < this.fields.length; i++) {
+        console.log('Field ' + currentField + ' -> step ' + currentStep);
+        this.fields.eq(currentField).appendTo(this.steps.last());
+        this.fieldsByStep[currentStep].push(this.fields.eq(currentField));
+        currentField++;
+      }
+    }
+
+    this.progressBarItems = jQuery('#progress-bar .step');
+
+    // Add a back button
+    this.backButton = this.forwardButton.clone().insertBefore(this.forwardButton);
+    this.backButton.addClass('back-button');
+    this.backButton.children('span').html(this.text.back);
+
+    // Add event listeners
+    this.backButton.bind('click.unbounceMultiStep', this.backHandler.bind(this));
+
+    this.forwardButton.bind('click.unbounceMultiStep', this.forwardHandler.bind(this));
+
+    this.fields.find(':input').bind('invalid', function(event) {
+      // Prevent browser from trying to focus invalid inputs on non-visible steps
+      if (jQuery(event.currentTarget).closest('fieldset.active').length === 0) {
+        event.preventDefault();
+      }
+    });
+
+    // Show first step
+    this.goToStep(0);
+  };
+
+  UnbounceMultiStep.prototype.goToStep = function(newStep) {
+    // Make sure we aren't going to a step that doesn't exist
+    if (newStep < 0 || newStep >= this.steps.length) {
+      return false;
+    }
+
+    this.steps
+      .eq(this.currentStep)
+      .removeClass('active')
+      .hide();
+
+    this.steps
+      .eq(newStep)
+      .addClass('active')
+      .fadeIn();
+
+    this.progressBarItems.eq(this.currentStep).removeClass('active');
+    this.progressBarItems.eq(newStep).addClass('active');
+
+    this.formContainer.toggleClass('initial', newStep === 0);
+    this.masterContainer.attr('step', newStep);
+
+    // Update the label of the forward button
+    var current = parseInt(newStep) + 2;
+    var total = this.steps.length;
+    var nextText = this.text.showSteps
+      ? this.text.next + ' (Step ' + current + ' of ' + total + ')'
+      : this.text.next;
+    var submitText = this.text.submit;
+
+    var forwardButtonLabel = newStep === this.steps.length - 1 ? submitText : nextText;
+
+    this.forwardButton.children('span').html(forwardButtonLabel);
+
+    this.currentStep = newStep;
+  };
+
+  UnbounceMultiStep.prototype.isValid = function() {
+    return this.steps.eq(this.currentStep)[0].querySelectorAll(':invalid').length === 0;
+  };
+	
+	UnbounceMultiStep.prototype.qcQuestions = function() {
+		let used_hair_straightner = jQuery('input[name=have_you_used_chemical_hair_straightening_products_for_at_least_3_times_per_year_for_5_years_or_more_either_at_home_or_in_a_salon]:checked');
+		let diagnosed_with_cancer = jQuery('input[name=were_you_diagnosed_with_either_ovarian_cancer_or_uterine_cancer]:checked');
+      let glp = jQuery('input[name=glp]:checked');
+		let questions = [used_hair_straightner, diagnosed_with_cancer, glp];
+		let expected_values = ['Yes', 'Yes', 'No'];
+		for (let i = 0; i < questions.length; i++) {
+			if (questions[i].val() !== expected_values[i]) {
+				window.location.href = 'https://contact.consumersafe.com/oz-ty/f.html';
+				return;
+			}
+		}
+		this.goToStep(this.currentStep + 1);
+	};
+
+  UnbounceMultiStep.prototype.forwardHandler = function(event) {
+    if (!this.isValid()) {
+      // If one or more fields on the current step is invalid, prevent going to next step. Allow the
+      // default click action, which will display the validation errors.
+      return;
+    }
+
+    if (this.currentStep === this.steps.length - 1) {
+      // If we are on the last step, go back to the first step, and allow the default click action,
+      // which will submit the form.
+			this.masterContainer.addClass('load-processing');
+      this.goToStep(0);
+    } else {
+      event.preventDefault();
+			this.qcQuestions();
+    }
+  };
+
+  UnbounceMultiStep.prototype.backHandler = function(event) {
+    event.preventDefault();
+    this.goToStep(this.currentStep - 1);
+  };
+
+  jQuery.fn.unbounceMultiStep = function(options) {
+    this.map(function(index, element) {
+      new UnbounceMultiStep(jQuery(element), options);
+    });
+    return this;
+  };
+  
+ 
+
+  
+</script>
+
+<script>
+
+  jQuery('.lp-pom-form form').unbounceMultiStep({
+    steps: [
+      //if you wanna hide title, simply keep empty of title value, like this {title: '', fields: 3}
+      { title: '', fields: 3 },
+      { title: '', fields: 5 }
+    ],
+    nextButton: 'Continue',
+    backButton: '« Back',
+  });
+
+  jQuery('#progress-bar').show();
+
+  jQuery(window).keydown(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+  
+
+</script>
+
+
+<style>
+
+
+  #lp-pom-form-24 .lp-pom-form-field .opt-label{
+font-size:16px !important;
+}
+
+  .load-processing::after {
+  	content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    background-image: url(https://d9hhrg4mnvzow.cloudfront.net/contact.consumersafe.com/hair-straightening/8eb417b0-ajax-loader.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 9;
+  }
+  
+  #lp-pom-form-24 .lp-pom-form-field .lp-form-label {
+    transform: scale(1) !important;
+    word-spacing: normal !important;
+}
+
+#container_first_name {
+    top: 5px !important ;
+}
+
+#container_last_name {
+    top: 76px !important;
+}
+
+#container_email {
+    top: 147px !important;
+}
+
+#container_phone_number {
+    top: 218px !important;
+}
+  
+  #lp-pom-form-24 .fields {
+    margin: 0 !important;
+}
+  
+  label.opt-label.form-builder-checkbox-label {
+    border: none !important;
+    text-align: left !important;
+  }
+
+  .multistep #fields .step {
+    height: auto !important;
+    position: absolute;
+    top: 0;
+    display: none;
+  }
+
+  .multistep #fields .step.active {
+    position: relative;
+  }
+
+  .multistep .lp-pom-form-field {
+    position: absolute !important;
+  }
+
+  .multistep .lp-pom-form-field .lp-form-label {
+    width:auto !important;
+  }
+  
+  .option input[type="radio"]+label {
+  	height: 50px !important;
+  }
+
+  .option input[type="radio"]:checked+label {
+    background-color: #ca6e2b !important;
+    color: white !important;
+  }
+
+  .multistep.initial .lp-pom-button.back-button {
+    display: none !important;
+  }
+
+  div.step {
+    width: 100%;
+    text-align: center;
+    background: #e6e6e6;
+    font-size: 15px;
+  }
+  
+  .step:first-child {
+    border-radius: 10px 0 0 0;
+  }
+  
+  .step:last-child {
+    border-radius: 0 10px 0 0;
+  }
+
+  div.step .num {
+    background: #e6e6e6;
+    padding: 6px 10px;
+    border-radius: 45px;
+    top: -5px;
+    font-weight: bold;
+    position:relative;
+    color: #646464;
+  }
+
+  div.step.active .num,
+  div.step.active {
+    background: #ca6e2b;
+    color: #fff;
+  }
+
+  div#progress-bar {
+   width: 419px;
+    left: -35px;
+    height: 10px;
+    top: -150px;
+    display: flex;
+    position: absolute;
+}
+  }
+
+  .multistep .lp-pom-button.back-button {
+    margin-right: 0;
+    float: left;
+    opacity: 0.7 !important;
+    background-color: #E6E6E6 !important;
+    color: #636363 !important;
+    width: 35% !important;
+    text-transform: uppercase !important;
+    display: none !important;
+  }
+
+  .multistep.initial .lp-pom-button.back-button {
+    display: none !important;
+  }  
+
+  span.title {
+    display: block;
+    margin-top: 7px;
+    color: #646464;
+  }
+
+  .optionsList {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    height: inherit !important;
+  }
+
+  .optionsList .option {
+    height: auto !important;
+    margin-bottom:10px !important;
+    position: unset !important;
+    padding: 0 !important;
+
+  }
+
+  .optionsList input[type="radio"]{
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    margin: 0 !important;
+    top: 51px;
+    left: 100px;
+  }
+
+  .optionsList label {
+    display: flex;
+    justify-content: center;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+    align-items: center;
+    text-align:center;
+    height: auto;
+    font-family: 'Public Sans', sans-serif !important;
+    background-color: #FFFFFF;
+    border: 1px solid #193D69;
+    border-radius: 4px;
+    position: relative;
+    margin-top:12px;
+  }
+
+  .optionsList label:after {
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-weight: 400;
+    text-rendering: auto;
+    font-size: 18px;
+    position: absolute;
+    right: 18px;
+    color: #131313;
+    -webkit-font-smoothing: antialiased;
+    top: 33%;
+  }
+  .optionsList label span {
+    line-height: 20px;
+  }
+
+  .optionsList label:hover {
+    cursor: pointer;
+  }
+
+  .optionsList label:hover:after {
+    color: #fff;
+  }
+  
+  #container_consent input {
+  	float: left;
+    margin-right: 0;
+  }
+
+#container_consent {
+  top: 295px !Important;
+}
+  
+  #container_consent label {
+  	display: inline-block;
+    float: left;
+    margin-top: -3px;
+  }
+  
+  .load-processing {
+  
+  }
+
+  @media screen and (max-width:600px) {
+    div#progress-bar {
+      width: 300px;
+    left: -17px;
+    top: -128px;
+    }
+
+#container_consent label {
+  	
+    margin-top: -2px;
+  }
+
+    div.step {
+      font-size: 12px;
+    }
+
+    .optionsList input[type="radio"] {
+      left: 80px;
+      top: 5px;
+    }
+    
+    #lp-pom-button-25{
+    filter: drop-shadow(0px 14px 24px #ca6e2b38);
+}
+    
+  }
+
+
+</style>
+
+
+<style>
+  
+
+  #lp-pom-box-19[step="0"],
+  #lp-pom-box-19[step="0"] #lp-pom-box-19-color-overlay {
+  	height: 706px;
+  }
+  
+.ub-input-item#group_consent{
+  max-width:320px !important;
+  }
+  
+  #lp-pom-box-19[step="0"] #lp-pom-button-25 {
+  	top: 450px;
+    width: 100%;
+  }
+  
+  #container_have_you_used_chemical_hair_straightening_products_for_at_least_3_times_per_year_for_5_years_or_more_either_at_home_or_in_a_salon {
+  	top: -20px;
+  }
+  
+  #container_were_you_diagnosed_with_either_ovarian_cancer_or_uterine_cancer {
+  	top: 118px;
+  }
+  
+  #container_have_you_used_chemical_hair_straightening_products_for_at_least_3_times_per_year_for_5_years_or_more_either_at_home_or_in_a_salon .optionsList {
+  	top: 52px;
+  }
+  
+  #container_were_you_diagnosed_with_either_ovarian_cancer_or_uterine_cancer .optionsList {
+  	top: 131px;
+  }
+  
+  #container_glp {
+    top: 334px;
+  }
+  
+  #lp-pom-form-24 .lp-pom-form-field .lp-form-label {
+  	line-height: 26px;
+  }
+  
+  #container_first_name {
+    top: 10px;
+  }
+
+  #container_last_name {
+    top: 76px;
+  }
+
+  #container_email {
+    top: 200px;
+  }
+
+  #container_phone_number {
+    top: 295px;
+  }
+
+  #container_consent {
+    top: 390px;
+    left: 20px;
+  }
+  
+  @media screen and (max-width:600px) {
+    #container_have_you_used_chemical_hair_straightening_products_for_at_least_3_times_per_year_for_5_years_or_more_either_at_home_or_in_a_salon {
+    top: -8px !important ;
+    }
+    
+    #container_were_you_diagnosed_with_either_ovarian_cancer_or_uterine_cancer {
+          top: 142px !important ;
+    }
+  
+    #container_have_you_used_chemical_hair_straightening_products_for_at_least_3_times_per_year_for_5_years_or_more_either_at_home_or_in_a_salon .optionsList {
+      top: 74px !important ;
+    }
+    
+    #lp-pom-box-19[step="0"] #lp-pom-button-25 {
+      top: 500px !important;
+    left: 0px !important ;
+    }
+    
+   
+    
+    #container_consent {
+      left: 20px !important ;
+          top: 266px !important ;
+    }
+    
+    #container_consent #ub-option-consent-item-0 {
+      width: 265px;
+    }
+    
+    #container_first_name {
+    top: 0px!important ;
+}
+    
+    #container_last_name {
+    top: 64px !important ;
+}
+    
+    #container_email {
+    top: 128px !important ;
+}
+    
+    #container_phone_number {
+    top: 192px !important ;
+}
+    #container_were_you_diagnosed_with_either_ovarian_cancer_or_uterine_cancer .optionsList {
+    top: 152px !important ;
+}
+    #lp-pom-box-19[step="0"], #lp-pom-box-19[step="0"] #lp-pom-box-19-color-overlay {
+    height: 710px !important ;
+}
+    .ub-input-item#group_consent {
+    max-width: 250px !important;
+}
+    #container_glp {
+    top: 369px !important;
+}
+    
+    .ub-input-item#group_glp {
+    position: absolute;
+    top: 48px !important;
+}
+  
+  }
+  
+
+
+</style>
