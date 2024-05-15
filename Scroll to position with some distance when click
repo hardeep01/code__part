@@ -1,0 +1,36 @@
+<script>
+  
+ // Function to determine if the current device is mobile
+function isMobile() {
+  return /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth < 768; // 768px is often used as a breakpoint for mobile
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Get all links with href that start with "#"
+  const anchorLinks = document.querySelectorAll('a[href^="#"]');
+
+  anchorLinks.forEach(function(anchor) {
+    anchor.addEventListener("click", function(event) {
+      event.preventDefault(); // Prevent the default anchor click behavior
+
+      const targetId = anchor.getAttribute("href");
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        const targetPosition = targetElement.getBoundingClientRect().top;
+
+        // Determine offset based on device type
+        const offset = isMobile() ? 100 : 170; // 100px for mobile, 150px for desktop
+
+        const offsetPosition = targetPosition - offset;
+
+        // Scroll to the calculated position smoothly
+        window.scrollBy({ top: offsetPosition, behavior: "smooth" });
+      }
+    });
+  });
+});
+
+
+  
+  </script>
