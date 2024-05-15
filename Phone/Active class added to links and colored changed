@@ -1,0 +1,35 @@
+<p style="line-height: 26px;"><span style="font-weight: 700; font-family: Poppins; font-size: 16px; color: rgb(0, 0, 0);"><u><a class="links" href="#lp-pom-box-239" style="color:#000;">What are dental implants?</a></u>&nbsp;</span></p>
+
+
+like above html there are many p with links and want active where class is links
+
+<script>
+    // Get all the links
+    var links = document.querySelectorAll('.links');
+
+    // Attach click event listener to each link
+    links.forEach(function(link) {
+        link.addEventListener('click', function() {
+            // Remove active class from all links
+            links.forEach(function(link) {
+                link.classList.remove('active');
+            });
+
+            // Add active class to the clicked link
+            this.classList.add('active');
+
+            // Scroll to the section
+            var targetId = this.getAttribute('data-target');
+            var targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+
+<style>
+    .active {
+        color: #0474B3 !important; /* Change this to the desired color */
+    }
+</style>
