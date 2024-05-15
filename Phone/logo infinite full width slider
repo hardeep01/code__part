@@ -1,0 +1,140 @@
+
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+       
+
+<script>
+  jQuery(document).ready(function($) {
+  $('.box-wrapper-1').slick({
+	slide: 'div',  
+    speed: 4000,
+	autoplay: true,
+	autoplaySpeed: 0,
+	cssEase: 'linear',
+	slidesToShow: 1,
+	slidesToScroll: 1,
+	variableWidth: true,
+    arrows: false,
+    dots: false,
+    pauseOnHover: false,
+  });
+});
+
+  
+</script>
+
+
+<script>
+  
+$(function(){
+var e = jQuery('#lp-code-131');  
+var a = jQuery('.lp-pom-root');
+e.css({'left':0, 'width':'100%', 'box-sizing':'border-box'}).prependTo(a);
+});
+  
+</script>
+
+
+
+
+<style>
+  .box-wrapper-1 .slick-list{
+    overflow:visible;
+  }
+  
+  @media(min-width:600px){
+    .box-wrapper-1 .box img{
+   width:130px;
+    }
+  }
+  
+  
+  
+  
+  
+ .box-wrapper-1 .slick-track{
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+/*     
+ .box-wrapper .box img{
+
+    margin-inline:12px;
+  } */
+ 
+  .box-wrapper-1 .box-a img{
+
+    margin:0 48px;
+    max-width: 160px !important;
+    max-height: 120px !important;
+  }
+  
+  .slick-list{
+    overflow:visible;
+  }
+  
+  @media(max-width:600px){
+     .box-wrapper-1 .box img{
+   width:95px;
+    }
+    
+    .box-wrapper-1 .box-a img {
+    margin: 0 0px;
+    scale: 0.7;
+}
+    
+  }
+  
+
+  
+ 
+</style>
+
+
+
+ <div class="box-wrapper-1">
+
+        <div class="box-a">
+            <img
+                src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/19ee69b7-5250-4975-90cd-ca5c10d7ae07/image-35.original.svg">
+        </div>
+
+        <div class="box-a">
+            <img
+                src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/22fa0f62-b9f4-46e6-bb93-5f5b7482884e/image-34.original.svg">
+        </div>
+
+        <div class="box-a">
+            <img
+                src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/0a7d3822-49c3-4287-b033-f1d21abe6ebf/image-32.original.svg">
+        </div>
+
+        <div class="box-a">
+            <img
+                src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/fc829952-f6ed-40da-a0ee-7302d835827c/image-28.original.svg">
+        </div>
+
+        <div class="box-a">
+            <img
+                src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/01cd6c71-b7ff-4f2c-9c09-cfb644594c22/image-29.original.svg">
+        </div>
+
+        <div class="box-a">
+            <img
+                src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/f5d60629-4fe8-4b26-abd9-9bb178848f09/image-30.original.svg">
+        </div>
+
+        <div class="box-a">
+            <img
+                src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/cdbe249c-f667-4987-bfef-a03711412f34/image-31.original.svg">
+        </div>
+   
+
+
+
+    </div>
