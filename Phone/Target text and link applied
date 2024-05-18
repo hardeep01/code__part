@@ -1,0 +1,29 @@
+<script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Find the input element by its ID
+    var checkbox = document.getElementById("tcpa_disclosure_by_submitting_this_form_i_represent_that_1_i_am_not_a_bot_2_this_is_a_bona_fide_legal_case_inquiry_3_i_consent_to_receive_sms_from_the_di_pietro_law_firm_about_my_potential_case_more_details_on_this_are_in_our_privacy_policy_and_terms_and_conditions");
+
+    // If the checkbox is found
+    if (checkbox) {
+        // Find the label associated with the checkbox
+        var labels = document.getElementsByTagName('label');
+        for (var i = 0; i < labels.length; i++) {
+            if (labels[i].htmlFor == checkbox.id) {
+                // Get the label's text
+                var labelText = labels[i].innerHTML;
+
+                // Replace the target text with linked text
+                labelText = labelText.replace('Privacy Policy', '<a href="https://www.atdlaw.com/privacy-policy" target="_blank">Privacy Policy</a>');
+                labelText = labelText.replace('Terms and Conditions', '<a href="https://www.atdlaw.com/terms-conditions" target="_blank">Terms and Conditions</a>');
+
+                // Update the label's HTML
+                labels[i].innerHTML = labelText;
+                break;
+            }
+        }
+    }
+});
+
+  
+</script>
