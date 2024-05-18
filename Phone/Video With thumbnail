@@ -1,0 +1,44 @@
+<div onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">
+   <img src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/e0a3c620-894f-46a9-ad13-b7975ff1e63b/video.original.svg" style="cursor:pointer" class="video-cover-img" />
+</div>
+<div style="display:none">
+  <iframe src="https://www.youtube.com/embed/mc5yp-LZw-A?autoplay=1modestbranding=1&rel=0&controls=0"   class="cover-video" ></iframe>
+
+</div>
+
+
+  .cover-video{
+  width:755px;
+    height:373px;
+  }
+  
+  
+
+  
+ @media (max-width:600px){
+
+    
+    .video-cover-img{
+    max-width:320px;
+      
+    }
+      .cover-video{
+      max-width:320px;
+        min-width:320px;
+        
+      }
+   
+   
+   .video-stream html5-main-video{
+          width: 400px !important;
+    height: 250px !important;
+    left: 0px !important;
+     top: 0px !important;
+
+   }
+   
+    .cover-video{
+  width:320px;
+    height:160px;
+  }
+  }
