@@ -1,0 +1,12 @@
+This is for autoplay with controls and mute
+
+<iframe src="https://www.youtube.com/embed/AjKKRiWry84?wmode=opaque&amp;autoplay=1&amp;controls=0&amp;mute=0" title="Urologist convicted of patient sex abuse, including of minors" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" width="100%" height="100%"></iframe>
+
+This is for youtube video with thumbnail
+<div onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">
+   <img src="https://user-assets-unbounce-com.s3.amazonaws.com/c906ef4a-bc36-40a5-b5b8-7f1fc3cfbfcd/e0a3c620-894f-46a9-ad13-b7975ff1e63b/video.original.svg" style="cursor:pointer" class="video-cover-img" />
+</div>
+<div style="display:none">
+  <iframe src="https://www.youtube.com/embed/mc5yp-LZw-A?autoplay=1modestbranding=1&rel=0&controls=0"   class="cover-video" ></iframe>
+
+</div>
