@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Mega Menu</title>
+    <style>
+        /* styles.css */
+
+        *,
+        html {
+            padding: 0;
+            margin: 0;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        .header-mobile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #034638;
+            color: white;
+        }
+
+        nav#megaMenu a {
+            text-decoration: none !important;
+            color: #333333 !important;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 1.5rem;
+            height: 1.1rem;
+            cursor: pointer;
+        }
+
+        li.sub-child-item {
+            margin: 8px 0 8px;
+            color: #333;
+            font-family: "Futura", Sans-serif;
+            font-weight: 300 !important;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 0.1rem;
+            background-color: white;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(0.3rem, 0.5rem);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(0.1rem, -0.56rem);
+        }
+
+        .mega-menu {
+            display: none;
+            height: 90vh;
+            background-color: #F7F7F7;
+            padding: 1rem 0 0 0;
+        }
+
+        .arrow {
+            transition: transform 0.3s;
+            transform: rotate(270deg);
+        }
+
+        .main-menu-item.active .arrow,
+        .main-child-item.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        span.arrow img {
+            max-width: 18px;
+        }
+
+        ul.sub-child {
+            padding: 10px 15px 0;
+        }
+
+        h4.main-menu-heading {
+            padding: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        li.main-child-item {
+            margin: 0px 0px 0px 0px !important;
+            padding: 15px 20px 15px 20px !important;
+            border-style: solid !important;
+            border-width: 1px 0px 1px 0px !important;
+            border-color: #D4D4D4 !important;
+        }
+
+        h5.main-child-heading {
+            display: flex;
+            font-weight: 600;
+            font-size: 16px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .main-child-item .main-child-heading .arrow {
+            transform: rotate(270deg);
+        }
+
+        .main-child-item.active .main-child-heading .arrow {
+            transform: rotate(90deg);
+        }
+
+        .sub-child-flex {
+            display: flex;
+            align-items: start;
+            justify-content: left;
+            gap: 10px;
+        }
+
+        .main-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .main-menu-item {
+            cursor: pointer;
+            font-size: 16px;
+            color: #000000;
+            padding: 0;
+            font-family: "Futura", Sans-serif;
+            font-weight: 600;
+        }
+
+        .main-child,
+        .sub-child {
+            list-style: none;
+            padding: 0;
+            margin-left: 0rem;
+            display: none;
+            background: white;
+        }
+
+        .main-child-item,
+        .sub-child-item {
+            cursor: pointer;
+            padding: 0rem;
+        }
+
+        .main-menu-item.active .main-child,
+        .main-child-item.active .sub-child {
+            display: block;
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 1024px) {
+            .header-mobile {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <header class="header-mobile">
+            <div class="logo"><img
+                    src="https://bellandbrunt.com.au/wp-content/uploads/2024/02/65557b306c6ccbbd2b72ede8_b7b-1.png"
+                    alt="Bell & Brunt - Fine Jewelry, Diamonds, and Gold"></div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+        <nav class="mega-menu" id="megaMenu">
+            <ul class="main-menu">
+                <li class="main-menu-item">
+                    <h4 class="main-menu-heading">ENGAGEMENT RING<span class="arrow">〱</span></h4>
+                    <ul class="main-child">
+
+                        <a href="https://bellandbrunt.com.au/our-custom-process/">
+                            <li class="main-child-item">
+                                <h5 class="main-child-heading">Design a custom ring</h5>
+                            </li>
+                        </a>
+                        <li class="main-child-item">
+                            <h5 class="main-child-heading">Engagement Rings Styles<span class="arrow">〱</span></h5>
+                            <ul class="sub-child">
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/engagement-rings/diamond-engagement-rings">Diamond
+                                        Rings</a></li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/engagement-rings/solitaire-style/">Solitaire
+                                        rings</a></li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/engagement-rings/halo/">Halo rings</a></li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/engagement-rings/cluster/">Cluster rings</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/engagement-rings/three-stone/">Three stone
+                                        rings</a></li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/engagement-rings/gemstone/">Gemstones
+                                        rings</a></li>
+                            </ul>
+                        </li>
+                        <li class="main-child-item">
+                            <h5 class="main-child-heading">Shop By Shape<span class="arrow">〱</span></h5>
+                            <div class="sub-child-flex">
+                                <ul class="sub-child">
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/round-brilliant-cut/">Round</a>
+                                    </li>
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/oval-cut/">Oval</a></li>
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/pear-cut/">Pear</a></li>
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/cushion-cut/">Cushion</a>
+                                    </li>
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/marquise-cut-shape/">Marquise</a>
+                                    </li>
+                                </ul>
+                                <ul class="sub-child">
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/round-brilliant-cut/">Round</a>
+                                    </li>
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/oval-cut/">Oval</a></li>
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/pear-cut/">Pear</a></li>
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/cushion-cut/">Cushion</a>
+                                    </li>
+                                    <li class="sub-child-item"><a
+                                            href="https://bellandbrunt.com.au/engagement-rings/marquise-cut-shape/">Marquise</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <a href="https://bellandbrunt.com.au/engagement-rings/">
+                            <li class="main-child-item">
+                                <h5 class="main-child-heading">View all engagement rings</h5>
+                            </li>
+                        </a>
+                    </ul>
+                </li>
+                <li class="main-menu-item">
+                    <h4 class="main-menu-heading">WEDDING RING<span class="arrow">〱</span></h4>
+                    <ul class="main-child">
+
+                        <li class="main-child-item">
+                            <h5 class="main-child-heading"><a
+                                    href="https://bellandbrunt.com.au/our-custom-process/">Customise Your Ring</a></h5>
+                        </li>
+                        <li class="main-child-item">
+                            <h5 class="main-child-heading">For Women<span class="arrow">〱</span></h5>
+                            <ul class="sub-child">
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/diamond-for-women-wedding-rings/">Diamond</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/eternity-rings/">Eternity</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/platinum-for-women-wedding-rings/">Platinum</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/white-gold-for-women-wedding-rings/">White
+                                        Gold</a></li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/rose-gold-for-women-wedding-rings/">Rose
+                                        Gold</a></li>
+
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/yellow-gold-for-women-wedding-rings/">Yellow
+                                        Gold</a></li>
+
+
+                                <li class="sub-child-item"><a href="https://bellandbrunt.com.au/wedding-rings/">All
+                                        Women Rings</a></li>
+                            </ul>
+                        </li>
+                        <li class="main-child-item">
+                            <h5 class="main-child-heading">For Men<span class="arrow">〱</span></h5>
+                            <ul class="sub-child">
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/platinum-for-men/">Platinum</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/white-gold-for-men/">White
+                                        Gold</a></li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/rose-gold-for-men/">Rose
+                                        Gold</a></li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/yellow-gold-for-men/">Yellow
+                                        Gold</a></li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/two-tone-for-men-wedding-rings/">Two-tone</a>
+                                </li>
+                                <li class="sub-child-item"><a href="https://bellandbrunt.com.au/wedding-rings/">All Men
+                                        Rings</a></li>
+                            </ul>
+                        </li>
+                        <li class="main-child-item">
+                            <h5 class="main-child-heading">Finish<span class="arrow">〱</span></h5>
+                            <ul class="sub-child">
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/men-gender-wedding-rings/brushed/">Brushed</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/men-gender-wedding-rings/polished/">Polished</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/men-gender-wedding-rings/satin/">Satin</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/men-gender-wedding-rings/cross-hatch/">Cross-hatch</a>
+                                </li>
+                                <li class="sub-child-item"><a
+                                        href="https://bellandbrunt.com.au/wedding-rings/men-gender-wedding-rings/hammer/">Hammer</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="main-child-item">
+                            <h5 class="main-child-heading"><a href="https://bellandbrunt.com.au/wedding-rings/">View All
+                                    Wedding Rings</a></h5>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="main-menu-item">
+                    <h4 class="main-menu-heading">JEWELLERY<span class="arrow">〱</span></h4>
+                    <ul class="main-child">
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/jewellery/high-jewellery">High
+                                Jewellery</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/jewellery/dress-rings/">Dress
+                                Rings</a>
+                        </li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/jewellery/signet-ring-adelaide/">Signet Rings</a>
+                        </li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/jewellery/engraved-style-jewellery/">Engraved</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/jewellery/earrings/">Earrings</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/jewellery/pendants/">Pendants</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/jewellery/chains-style-jewelley/">Chains</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/jewellery/necklaces/">Necklaces</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/jewellery/crosses/">Crosses</a>
+                        </li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/jewellery/bracelets/">Bracelets</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/jewellery/custom-gemstone-jewellery/">Gemstones</a>
+                        </li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/jewellery/pearls/">Pearls</a>
+                        </li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/our-custom-process/">Discover
+                                Our Custom Creations</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/jewellery/">View All
+                                Jewellery</a></li>
+                    </ul>
+                </li>
+
+
+                <li class="main-menu-item">
+                    <h4 class="main-menu-heading">SERVICES<span class="arrow">〱</span></h4>
+                    <ul class="main-child">
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/our-services">All Jewellery
+                                Services</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/our-custom-process/">Our Custom
+                                Process</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/our-services/#remodelling">Jewellery Remodelling</a>
+                        </li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/our-services/#jewellery-valuation">Jewellery
+                                Valuation</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/our-services/#repair-maintenance">Repair &
+                                Maintenance</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/our-services/#plating">Rhodium
+                                Plating</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/our-services/#engraving">Jewellery Engraving</a>
+                        </li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/our-services/#gemstonre">Gemstone Identification</a>
+                        </li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/our-services/#jewellery_insurance">Jewellery
+                                Insurance</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/our-services/#rethreading">Pearl & Bead
+                                Rethreading</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/our-services/#delivery">Intra &
+                                Interstate Delivery</a></li>
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/ring-creation-video-service/">Ring Creation Video
+                                Service</a></li>
+                    </ul>
+                </li>
+
+
+                <li class="main-menu-item">
+                    <h4 class="main-menu-heading">INFO<span class="arrow">〱</span></h4>
+
+                    <ul class="main-child">
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/about-us/">About Us</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/team/">Meet Our Masters</a>
+                        </li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/faq/">FAQs</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/testimonial/">Testimonials</a>
+                        </li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/privacy-policy/">Privacy
+                                Policy</a></li>
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/contact-us/">Contact Us</a>
+                        </li>
+
+                        <!-- <li class="main-child-item"><a href="https://bellandbrunt.com.au/the-bell-brunt-difference/">The
+                                Bell &amp; Brunt Difference</a></li> -->
+
+                        <li class="main-child-item"><a
+                                href="https://bellandbrunt.com.au/diamond-and-jewellery-education/">Explore Education
+                                Articles</a></li>
+
+                        <li class="main-child-item"><a href="https://bellandbrunt.com.au/blog/"> EXPLORE BLOGS</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="main-menu-item">
+                    <a href="https://bellandbrunt.com.au/contact/">
+                        <h4 class="main-menu-heading">Contact
+                    </a></h4>
+                </li>
+
+                <li class="main-menu-item">
+                    <a href="https://bellandbrunt.com.au/consultation/">
+                        <h4 class="main-menu-heading">Book An Appointment
+                    </a></h4>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+    <section class="hero-sec" style="min-height: 70vh;">
+
+    </section>
+
+
+
+
+    <script>
+        // scripts.js
+        document.addEventListener("DOMContentLoaded", function () {
+            const hamburger = document.getElementById("hamburger");
+            const megaMenu = document.getElementById("megaMenu");
+
+            hamburger.addEventListener("click", function () {
+                this.classList.toggle("active");
+                megaMenu.classList.toggle("active");
+
+                if (megaMenu.classList.contains("active")) {
+                    megaMenu.style.display = "block";
+                } else {
+                    megaMenu.style.display = "none";
+                    // Reset all active menu items
+                    resetActiveMenuItems();
+                }
+            });
+
+            const mainMenuItems = document.querySelectorAll(".main-menu-item");
+            mainMenuItems.forEach(item => {
+                item.addEventListener("click", function () {
+                    if (this.classList.contains("active")) {
+                        this.classList.remove("active");
+                    } else {
+                        mainMenuItems.forEach(i => i.classList.remove("active"));
+                        this.classList.add("active");
+                    }
+                });
+
+                const mainChildItems = item.querySelectorAll(".main-child-item");
+                mainChildItems.forEach(child => {
+                    child.addEventListener("click", function (e) {
+                        e.stopPropagation();  // Prevent triggering parent menu
+                        if (this.classList.contains("active")) {
+                            this.classList.remove("active");
+                        } else {
+                            mainChildItems.forEach(i => i.classList.remove("active"));
+                            this.classList.add("active");
+                        }
+                    });
+                });
+            });
+
+            function resetActiveMenuItems() {
+                const activeItems = document.querySelectorAll(".main-menu-item.active, .main-child-item.active");
+                activeItems.forEach(item => {
+                    item.classList.remove("active");
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
