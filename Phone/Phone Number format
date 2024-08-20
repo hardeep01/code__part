@@ -1,0 +1,46 @@
+//If less then 10 digit gives error message 
+
+<script>
+  // Define the phone number validation rule
+  window.ub.form.customValidators.phoneNumberValidation = {
+    isValid: function(value) {
+      // Regular expression to validate exactly 10 digits
+      return /^\d{10}$/.test(value);
+    },
+    message: 'Please enter a valid 10-digit phone number.',
+  };
+
+  // Apply the validation rule to the phone number field
+  window.ub.form.validationRules.your_phone_number.phoneNumberValidation = true;
+</script>
+
+
+
+
+
+//If less then 10 digit gives error message and not more than 10 digit accepted 
+
+<script>
+  // Define the phone number validation rule
+  window.ub.form.customValidators.phoneNumberValidation = {
+    isValid: function(value) {
+      // Regular expression to validate exactly 10 digits
+      return /^\d{10}$/.test(value);
+    },
+    message: 'Please enter a valid 10-digit phone number.',
+  };
+
+  // Apply the validation rule to the phone number field
+  window.ub.form.validationRules.your_phone_number.phoneNumberValidation = true;
+
+  // Restrict input to 10 digits maximum
+  document.addEventListener("DOMContentLoaded", function() {
+    const phoneNumberField = document.getElementById('your_phone_number');
+    
+    phoneNumberField.addEventListener('input', function() {
+      if (phoneNumberField.value.length > 10) {
+        phoneNumberField.value = phoneNumberField.value.slice(0, 10); // Trim to 10 digits
+      }
+    });
+  });
+</script>
